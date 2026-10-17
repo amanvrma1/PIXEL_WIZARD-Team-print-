@@ -1,0 +1,321 @@
+/* ==========================================================================
+   SLIET TechFest — styles
+   1. Base  2. Background  3. Hero logo  4. Navigation  5. Side bar  6. Cards
+   ========================================================================== */
+
+/* 1. Base ---------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --white: #fff;
+  --line: rgba(255, 255, 255, .6);
+  --glass: rgba(10, 10, 10, .3);
+  --nav-height: 54px;
+  --nav-top: 14px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; background: #000; }
+
+/* Total scroll length: controls how slowly the sequence plays */
+body {
+  height: 800vh;
+  font-family: var(--font);
+  color: var(--white);
+}
+
+/* 2. Background (image sequence) ---------------------------------------- */
+#sequence {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* 3. Hero logo ----------------------------------------------------------- */
+.hero-logo {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.hero-logo img {
+  width: min(78vw, 620px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .55));
+}
+
+/* 4. Navigation ---------------------------------------------------------- */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  padding: calc(var(--safe-top) + var(--nav-top)) 12px 0;
+  pointer-events: none;
+}
+
+.nav__bar {
+  position: relative;
+  width: min(1052px, 100%);
+  height: var(--nav-height);
+  pointer-events: auto;
+}
+
+.nav__shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, .45));
+}
+
+.nav__shape path {
+  fill: rgba(0, 0, 0, .4);
+  stroke: var(--line);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.nav__items {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 5%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav__items::-webkit-scrollbar { display: none; }
+
+/* Slanted highlight that slides between buttons (positioned by main.js) */
+.nav__highlight {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 0;
+  width: 0;
+  background: rgba(255, 255, 255, .24);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  pointer-events: none;
+}
+
+.nav__items a {
+  --x: 50%;
+  --y: 50%;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  padding: 16px 20px;
+  color: var(--white);
+  font: 500 13px/1 var(--font);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: .8;
+  transition: opacity .2s, transform .15s;
+}
+
+/* Cursor-following spotlight on hover */
+.nav__items a::before {
+  content: "";
+  position: absolute;
+  inset: 6px 0;
+  background: radial-gradient(80px circle at var(--x) var(--y), rgba(255, 255, 255, .35), transparent 70%);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.nav__items a:hover { opacity: 1; }
+.nav__items a:hover::before { opacity: 1; }
+.nav__items a:active { transform: scale(.94); }
+
+/* 5. Side bar ------------------------------------------------------------ */
+.side {
+  position: fixed;
+  top: 50%;
+  left: calc(var(--safe-left) + 18px);
+  z-index: 5;
+  width: 2px;
+  height: 240px;
+  margin-top: -120px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, .22);
+}
+
+.side__fill {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  border-radius: 2px;
+  background: var(--white);
+}
+
+.side__dot {
+  position: absolute;
+  left: 1px;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.side__dot i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border: 2px solid rgba(255, 255, 255, .6);
+  border-radius: 50%;
+  background: #000;
+  transition: background .3s, border-color .3s, transform .3s;
+}
+
+.side__dot.is-passed i { background: var(--white); border-color: var(--white); }
+.side__dot.is-current i { transform: scale(1.5); }
+
+.side__dot span {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  color: var(--white);
+  font: 500 11px/1 var(--font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+.side__dot:hover span { opacity: 1; }
+
+/* 6. Cards (glass) ------------------------------------------------------- */
+.cards {
+  position: fixed;
+  inset: calc(var(--safe-top) + 76px) 0 auto 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+.cards__grid {
+  width: min(760px, 100%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.card {
+  display: block;
+  height: clamp(110px, 17vh, 140px);
+  color: var(--white);
+  text-decoration: none;
+  opacity: 0;
+  transform-origin: top center;
+  will-change: transform, opacity;
+}
+
+/* Shared cut-corner shape */
+.card__body,
+.card__body::before,
+.card__body::after {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+.card__body {
+  --x: 50%;
+  --y: 50%;
+  position: relative;
+  height: 100%;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, .45);   /* acts as the glass border */
+  transition: transform .3s cubic-bezier(.2, .7, .2, 1), background .3s;
+}
+
+/* Frosted glass fill */
+.card__body::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+  transition: background .3s;
+}
+
+/* Cursor-following glow */
+.card__body::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: radial-gradient(220px circle at var(--x) var(--y), rgba(255, 255, 255, .2), transparent 70%);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.card__body > * {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .5);
+}
+
+.card__top { display: flex; justify-content: space-between; align-items: center; }
+.card small { font-size: 11px; letter-spacing: .3em; opacity: .7; }
+.card em { font-style: normal; font-size: 16px; transition: transform .3s; }
+.card b { display: block; font-size: clamp(14px, 1.7vw, 19px); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.card i { display: block; width: 36px; height: 2px; margin-top: 10px; background: var(--white); transition: width .45s cubic-bezier(.2, .7, .2, 1); }
+
+.card:hover .card__body { transform: translateY(-6px); background: rgba(255, 255, 255, .85); }
+.card:hover .card__body::before { background: rgba(10, 10, 10, .45); }
+.card:hover .card__body::after { opacity: 1; }
+.card:hover em { transform: translate(4px, -4px); }
+.card:hover i { width: 100%; }
+
+/* Responsive ------------------------------------------------------------- */
+@media (max-width: 700px) {
+  .cards__grid { grid-template-columns: 1fr; gap: 10px; }
+  .card { height: 52px; }
+  .card__body { flex-direction: row; align-items: center; padding: 0 18px; }
+  .card__top { order: 2; }
+  .card small, .card i { display: none; }
+  .card__bottom { flex: 1; }
+  .card b { font-size: 15px; }
+}
+
+@media (max-width: 560px) {
+  .nav__items { padding: 0 4%; }
+  .nav__items a { padding: 14px 10px; font-size: 10px; }
+  .side { left: 10px; height: 180px; margin-top: -90px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__items a, .card__body, .card i, .card em { transition: none; }
+}

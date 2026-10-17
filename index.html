@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SLIET TechFest</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Scroll-linked image sequence (background) -->
+  <canvas id="sequence" role="img" aria-label="TechFest animation"></canvas>
+
+  <!-- Hero logo: stays in front, moves up and fades out on scroll -->
+  <div class="hero-logo" id="heroLogo">
+    <img src="assets/logo.webp" alt="SLIET Longowal presents TechFest">
+  </div>
+
+  <!-- Top navigation -->
+  <header class="nav">
+    <nav class="nav__bar" aria-label="Main">
+      <svg class="nav__shape" viewBox="0 0 1052 54" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M38.5 38L13 14L38.5 0H1025.5L1052 14.5L1025.5 39V45.5L1016 54H899L895 50H870H841L837 54H742L737 50H682L678 54H636.5L633 50H578L573 54H546H491.5L487.5 50L432.5 49L428.5 54H387.5L384 50H328L323.5 53H270L230.5 54L226 50H170.5L167 54H48.5L38.5 46.5V38Z"/>
+      </svg>
+      <div class="nav__items" id="navItems">
+        <span class="nav__highlight" id="navHighlight"></span>
+        <a href="#home"         data-section="0">Home</a>
+        <a href="#competitions" data-section="1">Competitions</a>
+        <a href="#workshops"    data-section="2">Workshops</a>
+        <a href="#lectures"     data-section="3">Lectures</a>
+        <a href="#exhibitions"  data-section="4">Exhibitions</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Left progress bar (dots are generated from the nav links) -->
+  <aside class="side" id="side" aria-label="Section progress">
+    <span class="side__fill" id="sideFill"></span>
+  </aside>
+
+  <!-- Cards that drop out of the header at the end of the scroll -->
+  <section class="cards" aria-label="Highlights">
+    <div class="cards__grid">
+      <a class="card" href="#competitions" data-section="1">
+        <div class="card__body">
+          <div class="card__top"><small>01</small><em>&#8599;</em></div>
+          <div class="card__bottom"><b>Competitions</b><i></i></div>
+        </div>
+      </a>
+      <a class="card" href="#workshops" data-section="2">
+        <div class="card__body">
+          <div class="card__top"><small>02</small><em>&#8599;</em></div>
+          <div class="card__bottom"><b>Workshops</b><i></i></div>
+        </div>
+      </a>
+      <a class="card" href="#exhibitions" data-section="4">
+        <div class="card__body">
+          <div class="card__top"><small>03</small><em>&#8599;</em></div>
+          <div class="card__bottom"><b>Exhibitions</b><i></i></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
